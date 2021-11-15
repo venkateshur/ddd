@@ -1,0 +1,21 @@
+Characteristics of Apache Parquet are :
+Self-describing
+Columnar format
+Language-independen
+
+Benifits:
+Columnar storage limits IO operations.
+Columnar storage can fetch specific columns that you need to access.
+Columnar storage consumes less space.
+Columnar storage gives better-summarized data and follows type-specific encoding.
+Organizing by column allows for better compression, as data is more homogeneous. The space savings are very noticeable at the scale of a Hadoop cluster.
+I/O will be reduced as we can efficiently scan only a subset of the columns while reading the data. Better compression also reduces the bandwidth required to read the input.
+As we store data of the same type in each column, we can use encoding better suited to the modern processors’ pipeline by making instruction branching more predictable.
+
+Parquet vs ORC:
+
+Support
+Both ORC and Parquet are popular column-oriented big data file formats that share almost a similar design in that both share data in columns. While Parquet has a much broader range of support for the majority of the projects in the Hadoop ecosystem, ORC only supports Hive and Pig. One key difference between the two is that ORC is better optimized for Hive, whereas Parquet works really well with Apache Spark. In fact, Parquet is the default file format for writing and reading data in Apache Spark.
+
+Indexing 
+Working with ORC files is just as simple as working with Parquet files. Both are great for read-heavy workloads. However, ORC files are organized into stripes of data, which are the basic building blocks for data and are independent of each other. Each stripe has index, row data and footer. The footer is where the key statistics for each column within a stripe such as count, min, max, and sum are cached. Parquet, on the other hand, stores data in pages and each page contains header information, information about definition levels and repetition levels, and the actual data.
